@@ -3,8 +3,14 @@ from .models import Application
 
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ('student', 'opportunity', 'status', 'applied_at') # الأعمدة التي ستظهر للمشرف
-    list_filter = ('status', 'applied_at') # فلاتر جانبية للبحث
-    search_fields = ('student__username', 'opportunity__title') # إمكانية البحث باسم الطالب أو الفرصة
-    list_editable = ('status',) # تمكين المشرف من تغيير الحالة مباشرة من القائمة
+    # اظهار الحقول الأساسية والساعات في الجدول
+    list_display = ('id', 'student', 'status', 'volunteer_hours', 'applied_at')
     
+    # إضافة فلتر للحالة والتاريخ بالجنب
+    list_filter = ('status', 'applied_at')
+    
+    # البحث باسم المستخدم
+    search_fields = ('student__username',)
+    
+    # ميزة التعديل السريع للحالة والساعات من الجدول
+    list_editable = ('status', 'volunteer_hours')
