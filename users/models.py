@@ -13,9 +13,12 @@ class CustomUser(AbstractUser):
     )
 
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
-@property
-def is_student(self):
-    return self.role == 'student'
 
-@property
-def is_supervisor(self):
+    @property
+    def is_student(self):
+        return self.role == 'student'
+
+    @property
+    def is_supervisor(self):
+        return self.role == 'supervisor'
+    
