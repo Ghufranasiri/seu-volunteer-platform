@@ -16,12 +16,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.http import HttpResponse
-
-def home(request):
-    return HttpResponse("SEU Volunteer Platform is running ✅")
+from . import views
 
 urlpatterns = [
+    # Admin
     path('admin/', admin.site.urls),
-    path('', home),
+    
+    # Public Pages
+    path('', views.home, name='home'),
+    path('login/', views.login_view, name='login'),
+    path('register/', views.register_view, name='register'),
+    path('logout/', views.logout_view, name='logout'),
+    
+    # Opportunities
+    path('opportunities/', views.opportunities_list, name='opportunities_list'),
+    path('opportunities/<int:pk>/', views.opportunity_detail, name='opportunity_detail'),
+    
+    # Student Dashboard
+    path('dashboard/student/', views.student_dashboard, name='student_dashboard'),
+    path('hours/', views.hours_tracking, name='hours_tracking'),
+    path('certificates/', views.certificates_view, name='certificates'),
+    
+    # Agency Dashboard
+    path('dashboard/agency/', views.agency_dashboard, name='agency_dashboard'),
+    
+    # Admin Dashboard
+    path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
 ]
