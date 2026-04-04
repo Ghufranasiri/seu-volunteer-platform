@@ -17,6 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.urls import include, path
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("SEU Volunteer Platform is running ✅")
 
 urlpatterns = [
     # Admin
@@ -42,4 +47,7 @@ urlpatterns = [
     
     # Admin Dashboard
     path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
+    path('', home),
+    path('dashboard/', include('dashboard.urls')),
+    path('opportunities/', include('opportunities.urls')),
 ]
