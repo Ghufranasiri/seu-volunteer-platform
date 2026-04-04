@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'applications',
     
 
+    'dashboard',
     'users.apps.UsersConfig',
     'opportunities',
 ]

@@ -6,5 +6,20 @@ class CustomUser(AbstractUser):
     university_id = models.CharField(max_length=20, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
 
+    ROLE_CHOICES = (
+        ('student', 'Student'),
+        ('supervisor', 'Supervisor'),
+    )
+
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
+
+    @property
+    def is_student(self):
+        return self.role == 'student'
+
+    @property
+    def is_supervisor(self):
+        return self.role == 'supervisor'
+    
     def __str__(self):
         return self.username
