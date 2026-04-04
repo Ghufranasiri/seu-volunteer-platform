@@ -1,0 +1,507 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Certificates - SEU Volunteering Platform{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="row align-items-center mb-5">
+        <div class="col">
+            <h1 class="display-5 fw-bold mb-2">My Certificates</h1>
+            <p class="lead text-muted">Download and share your volunteer achievement certificates</p>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#shareModal">
+                <i class="fas fa-share-alt me-2"></i>Share
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <small class="text-muted d-block mb-2">Total Certificates</small>
+                    <h3 class="fw-bold mb-0">3</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <small class="text-muted d-block mb-2">Total Hours Certified</small>
+                    <h3 class="fw-bold mb-0">35 hrs</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <small class="text-muted d-block mb-2">Pending Certificates</small>
+                    <h3 class="fw-bold mb-0">1</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <small class="text-muted d-block mb-2">Verification Level</small>
+                    <h3 class="fw-bold mb-0">Gold</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="mb-4">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab">
+                    All Certificates
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="earned-tab" data-bs-toggle="tab" data-bs-target="#earned" type="button" role="tab">
+                    Earned (3)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab">
+                    Pending (1)
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Certificates Grid -->
+    <div class="tab-content">
+        <!-- All Certificates Tab -->
+        <div class="tab-pane fade show active" id="all" role="tabpanel">
+            <div class="row g-4">
+                <!-- Certificate 1 - Earned -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 certificate-card">
+                        <div class="position-relative overflow-hidden" style="height: 280px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="p-4 h-100 d-flex flex-column justify-content-between text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                <div>
+                                    <div class="mb-3">
+                                        <i class="fas fa-medal" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <h5 class="fw-bold mb-2">Education Excellence</h5>
+                                    <p class="small mb-0">English Tutoring Achievement</p>
+                                </div>
+                                <div>
+                                    <p class="small mb-0 opacity-75">Mar 05 - Apr 30, 2024</p>
+                                    <p class="small opacity-75"><strong>20 hours certified</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check me-1"></i>Verified
+                                </span>
+                                <small class="text-muted">Issued: Mar 30, 2024</small>
+                            </div>
+                            <p class="card-text text-muted small mb-3">
+                                This certificate recognizes successful completion of volunteer tutoring program with excellence.
+                            </p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#certificateModal">
+                                    <i class="fas fa-eye me-1"></i>View
+                                </button>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-download me-1"></i>Download PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificate 2 - Earned -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 certificate-card">
+                        <div class="position-relative overflow-hidden" style="height: 280px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                            <div class="p-4 h-100 d-flex flex-column justify-content-between text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                <div>
+                                    <div class="mb-3">
+                                        <i class="fas fa-heart" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <h5 class="fw-bold mb-2">Healthcare Hero</h5>
+                                    <p class="small mb-0">Hospital Support Services</p>
+                                </div>
+                                <div>
+                                    <p class="small mb-0 opacity-75">Feb 15 - Mar 15, 2024</p>
+                                    <p class="small opacity-75"><strong>8 hours certified</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check me-1"></i>Verified
+                                </span>
+                                <small class="text-muted">Issued: Mar 16, 2024</small>
+                            </div>
+                            <p class="card-text text-muted small mb-3">
+                                Recognition for dedicated service and support provided to patients and healthcare staff.
+                            </p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#certificateModal">
+                                    <i class="fas fa-eye me-1"></i>View
+                                </button>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-download me-1"></i>Download PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificate 3 - Earned -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 certificate-card">
+                        <div class="position-relative overflow-hidden" style="height: 280px; background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+                            <div class="p-4 h-100 d-flex flex-column justify-content-between text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                <div>
+                                    <div class="mb-3">
+                                        <i class="fas fa-leaf" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <h5 class="fw-bold mb-2">Environmental Champion</h5>
+                                    <p class="small mb-0">Environmental Conservation</p>
+                                </div>
+                                <div>
+                                    <p class="small mb-0 opacity-75">Jan 20 - Mar 10, 2024</p>
+                                    <p class="small opacity-75"><strong>7 hours certified</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check me-1"></i>Verified
+                                </span>
+                                <small class="text-muted">Issued: Mar 12, 2024</small>
+                            </div>
+                            <p class="card-text text-muted small mb-3">
+                                Awarded for outstanding contributions to environmental conservation and sustainability projects.
+                            </p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#certificateModal">
+                                    <i class="fas fa-eye me-1"></i>View
+                                </button>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-download me-1"></i>Download PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificate 4 - Pending -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 certificate-card opacity-75">
+                        <div class="position-relative overflow-hidden" style="height: 280px; background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">
+                            <div class="p-4 h-100 d-flex flex-column justify-content-between text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                <div>
+                                    <div class="mb-3">
+                                        <i class="fas fa-hands-helping" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <h5 class="fw-bold mb-2">Community Helper</h5>
+                                    <p class="small mb-0">Food Distribution Program</p>
+                                </div>
+                                <div>
+                                    <p class="small mb-0 opacity-75">Mar 15 - Present</p>
+                                    <p class="small opacity-75"><strong>5 hours (pending)</strong></p>
+                                </div>
+                            </div>
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                                <div class="bg-warning rounded-circle p-3" style="opacity: 0.9;">
+                                    <i class="fas fa-hourglass-half text-white" style="font-size: 1.5rem;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-warning">
+                                    <i class="fas fa-clock me-1"></i>Pending
+                                </span>
+                                <small class="text-muted">Awaiting verification</small>
+                            </div>
+                            <p class="card-text text-muted small mb-3">
+                                Your certificate will be issued once all hours are verified and approved by the organization.
+                            </p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-warning btn-sm" disabled>
+                                    <i class="fas fa-lock me-1"></i>Pending Review
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earned Tab -->
+        <div class="tab-pane fade" id="earned" role="tabpanel">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 certificate-card">
+                        <div class="position-relative overflow-hidden" style="height: 280px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="p-4 h-100 d-flex flex-column justify-content-between text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                <div>
+                                    <div class="mb-3">
+                                        <i class="fas fa-medal" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <h5 class="fw-bold mb-2">Education Excellence</h5>
+                                    <p class="small mb-0">English Tutoring Achievement</p>
+                                </div>
+                                <div>
+                                    <p class="small mb-0 opacity-75">Mar 05 - Apr 30, 2024</p>
+                                    <p class="small opacity-75"><strong>20 hours certified</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check me-1"></i>Verified
+                                </span>
+                                <small class="text-muted">Issued: Mar 30, 2024</small>
+                            </div>
+                            <p class="card-text text-muted small mb-3">
+                                This certificate recognizes successful completion of volunteer tutoring program with excellence.
+                            </p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#certificateModal">
+                                    <i class="fas fa-eye me-1"></i>View
+                                </button>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-download me-1"></i>Download PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 certificate-card">
+                        <div class="position-relative overflow-hidden" style="height: 280px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                            <div class="p-4 h-100 d-flex flex-column justify-content-between text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                <div>
+                                    <div class="mb-3">
+                                        <i class="fas fa-heart" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <h5 class="fw-bold mb-2">Healthcare Hero</h5>
+                                    <p class="small mb-0">Hospital Support Services</p>
+                                </div>
+                                <div>
+                                    <p class="small mb-0 opacity-75">Feb 15 - Mar 15, 2024</p>
+                                    <p class="small opacity-75"><strong>8 hours certified</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check me-1"></i>Verified
+                                </span>
+                                <small class="text-muted">Issued: Mar 16, 2024</small>
+                            </div>
+                            <p class="card-text text-muted small mb-3">
+                                Recognition for dedicated service and support provided to patients and healthcare staff.
+                            </p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#certificateModal">
+                                    <i class="fas fa-eye me-1"></i>View
+                                </button>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-download me-1"></i>Download PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 certificate-card">
+                        <div class="position-relative overflow-hidden" style="height: 280px; background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+                            <div class="p-4 h-100 d-flex flex-column justify-content-between text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                <div>
+                                    <div class="mb-3">
+                                        <i class="fas fa-leaf" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <h5 class="fw-bold mb-2">Environmental Champion</h5>
+                                    <p class="small mb-0">Environmental Conservation</p>
+                                </div>
+                                <div>
+                                    <p class="small mb-0 opacity-75">Jan 20 - Mar 10, 2024</p>
+                                    <p class="small opacity-75"><strong>7 hours certified</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check me-1"></i>Verified
+                                </span>
+                                <small class="text-muted">Issued: Mar 12, 2024</small>
+                            </div>
+                            <p class="card-text text-muted small mb-3">
+                                Awarded for outstanding contributions to environmental conservation and sustainability projects.
+                            </p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#certificateModal">
+                                    <i class="fas fa-eye me-1"></i>View
+                                </button>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-download me-1"></i>Download PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Tab -->
+        <div class="tab-pane fade" id="pending" role="tabpanel">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 certificate-card opacity-75">
+                        <div class="position-relative overflow-hidden" style="height: 280px; background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">
+                            <div class="p-4 h-100 d-flex flex-column justify-content-between text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                <div>
+                                    <div class="mb-3">
+                                        <i class="fas fa-hands-helping" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <h5 class="fw-bold mb-2">Community Helper</h5>
+                                    <p class="small mb-0">Food Distribution Program</p>
+                                </div>
+                                <div>
+                                    <p class="small mb-0 opacity-75">Mar 15 - Present</p>
+                                    <p class="small opacity-75"><strong>5 hours (pending)</strong></p>
+                                </div>
+                            </div>
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                                <div class="bg-warning rounded-circle p-3" style="opacity: 0.9;">
+                                    <i class="fas fa-hourglass-half text-white" style="font-size: 1.5rem;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-warning">
+                                    <i class="fas fa-clock me-1"></i>Pending
+                                </span>
+                                <small class="text-muted">Awaiting verification</small>
+                            </div>
+                            <p class="card-text text-muted small mb-3">
+                                Your certificate will be issued once all hours are verified and approved by the organization.
+                            </p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-warning btn-sm" disabled>
+                                    <i class="fas fa-lock me-1"></i>Pending Review
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Certificate Modal -->
+<div class="modal fade" id="certificateModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Certificate Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="certificate-preview" style="background: white; border: 2px solid #333; padding: 40px; text-align: center; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
+                    <div style="border: 3px double #333; padding: 30px; background: white;">
+                        <h1 class="fw-bold mb-2" style="font-size: 2rem; color: #667eea;">Certificate</h1>
+                        <h3 class="fw-bold mb-4" style="font-size: 1.5rem;">of Appreciation</h3>
+                        <p class="text-muted mb-3" style="font-size: 0.95rem;">This is to certify that</p>
+                        <h4 class="fw-bold mb-4">Mohammad Hassan</h4>
+                        <p class="text-muted mb-4" style="font-size: 0.95rem;">has successfully completed</p>
+                        <h5 class="fw-bold mb-4">English Tutoring Achievement Program</h5>
+                        <p class="text-muted mb-4" style="font-size: 0.9rem;">
+                            with <strong>20 hours</strong> of dedicated volunteer service<br>
+                            from <strong>March 5, 2024</strong> to <strong>April 30, 2024</strong>
+                        </p>
+                        <hr class="my-4">
+                        <div class="d-flex justify-content-around mt-4" style="font-family: cursive;">
+                            <div>
+                                <p class="mb-1" style="font-size: 0.85rem;">_________________</p>
+                                <p style="font-size: 0.85rem;">Director</p>
+                            </div>
+                            <div>
+                                <p class="mb-1" style="font-size: 0.85rem;">_________________</p>
+                                <p style="font-size: 0.85rem;">Date</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-top">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="#" class="btn btn-primary">
+                    <i class="fas fa-download me-2"></i>Download PDF
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Share Your Certificates</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-muted mb-4">Share your achievements with your network:</p>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary">
+                        <i class="fab fa-linkedin me-2"></i>Share on LinkedIn
+                    </button>
+                    <button class="btn btn-outline-primary">
+                        <i class="fab fa-twitter me-2"></i>Share on Twitter
+                    </button>
+                    <button class="btn btn-outline-primary">
+                        <i class="fab fa-facebook me-2"></i>Share on Facebook
+                    </button>
+                    <button class="btn btn-outline-primary">
+                        <i class="fas fa-envelope me-2"></i>Share via Email
+                    </button>
+                </div>
+                <hr class="my-4">
+                <p class="text-muted mb-3">Or copy your certificate link:</p>
+                <div class="input-group">
+                    <input type="text" class="form-control" value="https://seu-volunteer.edu/certificates/abc123" readonly>
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .certificate-card {
+        transition: transform 0.3s ease;
+    }
+    .certificate-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}

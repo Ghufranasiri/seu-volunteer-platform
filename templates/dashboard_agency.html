@@ -1,0 +1,425 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Agency Dashboard - SEU Volunteering Platform{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="container-xl">
+        <!-- Page Header -->
+        <div class="row align-items-center mb-5">
+            <div class="col">
+                <h1 class="h2 fw-bold mb-1">Agency Dashboard</h1>
+                <p class="text-muted">Manage your volunteer opportunities and registrations</p>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postOpportunityModal">
+                    <i class="fas fa-plus me-2"></i>Post New Opportunity
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-2">Active Opportunities</p>
+                                <h3 class="fw-bold mb-0">12</h3>
+                            </div>
+                            <div class="bg-primary bg-opacity-10 p-3 rounded">
+                                <i class="fas fa-briefcase text-primary fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-2">Total Registrations</p>
+                                <h3 class="fw-bold mb-0">287</h3>
+                            </div>
+                            <div class="bg-success bg-opacity-10 p-3 rounded">
+                                <i class="fas fa-users text-success fs-5"></i>
+                            </div>
+                        </div>
+                        <small class="text-success"><i class="fas fa-arrow-up me-1"></i>+45 this month</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-2">Total Hours</p>
+                                <h3 class="fw-bold mb-0">5.2K</h3>
+                            </div>
+                            <div class="bg-warning bg-opacity-10 p-3 rounded">
+                                <i class="fas fa-clock text-warning fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-2">Approval Rate</p>
+                                <h3 class="fw-bold mb-0">94%</h3>
+                            </div>
+                            <div class="bg-info bg-opacity-10 p-3 rounded">
+                                <i class="fas fa-chart-pie text-info fs-5"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opportunities Management -->
+        <div class="card border-0 shadow-sm mb-5">
+            <div class="card-header bg-white border-bottom p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">Your Opportunities</h5>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="filterByStatus('active')">
+                            Active
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="filterByStatus('draft')">
+                            Draft
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="filterByStatus('closed')">
+                            Closed
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Opportunity</th>
+                            <th>Category</th>
+                            <th>Registrations</th>
+                            <th>Hours</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>English Tutoring Program</strong><br>
+                                <small class="text-muted">For underprivileged children</small>
+                            </td>
+                            <td><span class="badge bg-primary">Education</span></td>
+                            <td><span class="fw-bold">28</span>/30</td>
+                            <td>20 hrs</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>Mar 01, 2024</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Science Lab Assistant</strong><br>
+                                <small class="text-muted">Lab assistant needed</small>
+                            </td>
+                            <td><span class="badge bg-primary">Education</span></td>
+                            <td><span class="fw-bold">15</span>/20</td>
+                            <td>45 hrs</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>Feb 28, 2024</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Hospital Support Volunteer</strong><br>
+                                <small class="text-muted">Patient support staff</small>
+                            </td>
+                            <td><span class="badge bg-success">Health</span></td>
+                            <td><span class="fw-bold">8</span>/10</td>
+                            <td>30 hrs</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>Feb 20, 2024</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Beach Cleanup Initiative</strong><br>
+                                <small class="text-muted">Environmental conservation</small>
+                            </td>
+                            <td><span class="badge bg-info">Environment</span></td>
+                            <td><span class="fw-bold">32</span>/40</td>
+                            <td>4 hrs</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>Feb 15, 2024</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary me-1" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Registrations -->
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <h5 class="fw-bold mb-0">Recent Registrations</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Volunteer</th>
+                                    <th>Opportunity</th>
+                                    <th>Registered</th>
+                                    <th>Hours Completed</th>
+                                    <th>Approval Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>Sarah Ahmed</strong><br>
+                                        <small class="text-muted">sarah@seu.edu</small>
+                                    </td>
+                                    <td>English Tutoring</td>
+                                    <td>Mar 15, 2024</td>
+                                    <td>12 hrs</td>
+                                    <td>
+                                        <span class="badge bg-success">Approved</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Mohammad Ali</strong><br>
+                                        <small class="text-muted">mohammad@seu.edu</small>
+                                    </td>
+                                    <td>Science Lab</td>
+                                    <td>Mar 14, 2024</td>
+                                    <td>8 hrs</td>
+                                    <td>
+                                        <span class="badge bg-warning">Pending</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Fatima Al-Rashid</strong><br>
+                                        <small class="text-muted">fatima@seu.edu</small>
+                                    </td>
+                                    <td>Hospital Support</td>
+                                    <td>Mar 12, 2024</td>
+                                    <td>5 hrs</td>
+                                    <td>
+                                        <span class="badge bg-success">Approved</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <h5 class="fw-bold mb-0">Registrations by Month</h5>
+                    </div>
+                    <div class="card-body p-4" style="height: 250px;">
+                        <canvas id="registrationsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <h5 class="fw-bold mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <button class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#postOpportunityModal">
+                            <i class="fas fa-plus me-2 text-primary"></i>Post New Opportunity
+                        </button>
+                        <button class="list-group-item list-group-item-action">
+                            <i class="fas fa-file-alt me-2 text-success"></i>View Report
+                        </button>
+                        <button class="list-group-item list-group-item-action">
+                            <i class="fas fa-cog me-2 text-warning"></i>Agency Settings
+                        </button>
+                        <button class="list-group-item list-group-item-action">
+                            <i class="fas fa-question-circle me-2 text-info"></i>Help & Support
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Post Opportunity Modal -->
+<div class="modal fade" id="postOpportunityModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold">Post New Opportunity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-500">Opportunity Title</label>
+                        <input type="text" class="form-control" placeholder="e.g., English Tutoring Program">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-500">Description</label>
+                        <textarea class="form-control" rows="4" placeholder="Describe the opportunity and what volunteers will do"></textarea>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-500">Category</label>
+                            <select class="form-select">
+                                <option selected>Select category</option>
+                                <option>Education</option>
+                                <option>Health & Care</option>
+                                <option>Environment</option>
+                                <option>Community Service</option>
+                                <option>Arts & Culture</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-500">Total Hours</label>
+                            <input type="number" class="form-control" min="1" placeholder="20">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-500">Start Date</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-500">End Date</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-500">Target Volunteers</label>
+                            <input type="number" class="form-control" min="1" placeholder="10">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-500">Requirement Level</label>
+                            <select class="form-select">
+                                <option selected>Beginner Friendly</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-500">Required Skills (optional)</label>
+                        <input type="text" class="form-control" placeholder="e.g., Communication, Patience, English Proficiency">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-500">Location</label>
+                        <input type="text" class="form-control" placeholder="Community Center, Room 101">
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="publishOnPost" checked>
+                        <label class="form-check-label" for="publishOnPost">
+                            Publish immediately (or save as draft)
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Post Opportunity</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Registrations Chart
+const registrationsCtx = document.getElementById('registrationsChart');
+if (registrationsCtx) {
+    new Chart(registrationsCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar'],
+            datasets: [{
+                label: 'Registrations',
+                data: [65, 78, 87],
+                backgroundColor: '#667eea'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+function filterByStatus(status) {
+    console.log('Filter by status:', status);
+    // Implement filtering logic
+}
+</script>
+{% endblock %}
