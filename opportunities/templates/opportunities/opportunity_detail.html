@@ -1,0 +1,42 @@
+{% extends 'opportunities/base.html' %}
+
+{% block title %}{{ opportunity.name }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'opportunity_list' %}" class="back-link">← Back to Opportunities</a>
+
+<div class="detail-card" style="margin-top: 1rem;">
+    <div class="detail-header">
+        <h1>{{ opportunity.name }}</h1>
+        {% if opportunity.category %}
+            <span style="background: #3498db; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">{{ opportunity.category }}</span>
+        {% endif %}
+    </div>
+
+    <div class="detail-info">
+        <div class="info-item">
+            <label>Location</label>
+            <div>{{ opportunity.location }}</div>
+        </div>
+        <div class="info-item">
+            <label>Date</label>
+            <div>{{ opportunity.date }}</div>
+        </div>
+        <div class="info-item">
+            <label>Volunteer Hours</label>
+            <div>{{ opportunity.hours }} hours</div>
+        </div>
+        {% if opportunity.organization %}
+        <div class="info-item">
+            <label>Organization</label>
+            <div>{{ opportunity.organization }}</div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="description">
+        <h3 style="margin-bottom: 0.5rem; color: #2c3e50;">Description</h3>
+        <p>{{ opportunity.description|linebreaks }}</p>
+    </div>
+</div>
+{% endblock %}
