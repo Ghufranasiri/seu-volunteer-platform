@@ -42,7 +42,6 @@ INSTALLED_APPS = [
 
     'dashboard',
     'users.apps.UsersConfig',
-    'volunteers.apps.VolunteersConfig',
     'opportunities',
 ]
 
@@ -121,7 +120,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'users.CustomUser'

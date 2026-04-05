@@ -20,3 +20,6 @@ class CustomUser(AbstractUser):
     @property
     def is_supervisor(self):
         return self.role == 'supervisor'
+    
+    def __str__(self):
+        return self.username
