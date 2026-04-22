@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Certificates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1f2744;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1f2744;
+            margin-bottom: 10px;
+        }
+
+        .info {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .actions a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 10px 16px;
+            text-decoration: none;
+            background: #1f2744;
+            color: white;
+            border-radius: 6px;
+        }
+
+        .actions a.ar {
+            background: #8a6d3b;
+        }
+
+        .empty {
+            text-align: center;
+            color: #777;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>My Certificates</h1>
+
+        {% if certificates %}
+            {% for certificate in certificates %}
+                <div class="card">
+                    <div class="title">{{ certificate.opportunity.name }}</div>
+                    <div class="info">
+                        Issued on: {{ certificate.issued_at|date:"F d, Y" }}
+                    </div>
+
+                    <div class="actions">
+                            <a href="{% url 'certificate_en' certificate.id %}">View English</a>
+                            <a href="{% url 'certificate_ar' certificate.id %}" class="ar">View Arabic</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty">
+                You do not have any certificates yet.
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
