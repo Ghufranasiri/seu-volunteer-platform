@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-box">
+        <h2>
+            {% if request.LANGUAGE_CODE == 'ar' %}
+                إنشاء حساب جديد
+            {% else %}
+                Create New Account
+            {% endif %}
+        </h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <input type="text" name="first_name" placeholder="{% if request.LANGUAGE_CODE == 'ar' %}الاسم الأول{% else %}First Name{% endif %}" required>
+
+            <input type="email" name="email" placeholder="{% if request.LANGUAGE_CODE == 'ar' %}البريد الإلكتروني{% else %}Email{% endif %}" required>
+
+            <input type="password" name="password" placeholder="{% if request.LANGUAGE_CODE == 'ar' %}كلمة المرور{% else %}Password{% endif %}" required>
+
+            <input type="password" name="confirm_password" placeholder="{% if request.LANGUAGE_CODE == 'ar' %}تأكيد كلمة المرور{% else %}Confirm Password{% endif %}" required>
+
+            <button type="submit">
+                {% if request.LANGUAGE_CODE == 'ar' %}تسجيل{% else %}Register{% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

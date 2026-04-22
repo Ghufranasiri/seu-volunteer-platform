@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Dashboard</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h1>SEU Volunteer Dashboard</h1>
+{% block content %}
+<h2>Dashboard</h2>
 
-<h3>Platform Statistics</h3>
+<p>Welcome {{ user.username }}</p>
 
-<p>Total Opportunities: {{ total_opportunities }}</p>
-<p>Total Applications: {{ total_applications }}</p>
-<p>Total Volunteer Hours: {{ total_hours }}</p>
-
-<hr>
-
-<h3>Certificates</h3>
-
-<button onclick="window.print()">Print Certificate</button>
-
-</body>
-</html>
+<ul>
+    <li><a href="{% url 'student_dashboard' %}">Student Dashboard</a></li>
+    <li><a href="{% url 'agency_dashboard' %}">Agency Dashboard</a></li>
+    <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+</ul>
+{% endblock %}
