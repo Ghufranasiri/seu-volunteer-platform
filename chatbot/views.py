@@ -1,6 +1,4 @@
 from django.shortcuts import render
 
-
-
-def chat_view(request):
+def chatbot_page(request):
     return render(request, "chatbot/chat.html")

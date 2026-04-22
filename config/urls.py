@@ -26,4 +26,6 @@ urlpatterns = [
     path('', home),
     path('dashboard/', include('dashboard.urls')),
     path('opportunities/', include('opportunities.urls')),
+    path('users/', include('users.urls')),
+    path('chatbot/', include('chatbot.urls')),
 ]
