@@ -32,7 +32,16 @@ class Application(models.Model):
                     user=self.student,
                     opportunity=self.opportunity
                 )
+            from accounts.models import Notification
 
+            if not Notification.objects.filter(
+            user=self.student,
+            message=f"Congratulations! Your certificate for {self.opportunity} is ready."
+            ).exists():
+             Notification.objects.create(
+            user=self.student,
+            message=f"Congratulations! Your certificate for {self.opportunity} is ready."
+    )
     class Meta:
         constraints = [
             models.UniqueConstraint(

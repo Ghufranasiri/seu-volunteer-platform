@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Notifications</title>
+</head>
+<body>
+    <h1>My Notifications</h1>
+
+    {% for n in notifications %}
+        <div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
+            <p>{{ n.message }}</p>
+            <small>{{ n.created_at }}</small>
+        </div>
+    {% empty %}
+        <p>No notifications yet.</p>
+    {% endfor %}
+</body>
+</html>
