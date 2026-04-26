@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'dashboard',
     'users.apps.UsersConfig',
     'opportunities',
+    'accounts',
 ]
 
 
