@@ -1,0 +1,29 @@
+{% extends 'opportunities/base.html' %}
+
+{% block title %}Volunteer Opportunities{% endblock %}
+
+{% block content %}
+<h1 style="margin-bottom: 1.5rem; color: #2c3e50;">Volunteer Opportunities</h1>
+
+{% if opportunities %}
+    {% for opportunity in opportunities %}
+        <div class="card">
+            <h2><a href="{% url 'opportunity_detail' opportunity.pk %}">{{ opportunity.name }}</a></h2>
+            <div class="meta">
+                <span>📍 {{ opportunity.location }}</span>
+                <span>📅 {{ opportunity.date }}</span>
+                <span>⏰ {{ opportunity.hours }} hours</span>
+                {% if opportunity.organization %}
+                    <span>🏢 {{ opportunity.organization }}</span>
+                {% endif %}
+            </div>
+            <p>{{ opportunity.description|truncatewords:50 }}</p>
+            <a href="{% url 'opportunity_detail' opportunity.pk %}" class="btn" style="margin-top: 1rem;">View Details</a>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="empty">
+        <p>No volunteer opportunities available at the moment.</p>
+    </div>
+{% endif %}
+{% endblock %}
