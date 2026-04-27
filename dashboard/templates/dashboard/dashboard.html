@@ -27,6 +27,16 @@
 
 <hr>
 
+<h3>Recommended Opportunities</h3>
+
+{% for opp in recommended %}
+    <p>{{ opp.title }}</p>
+{% empty %}
+    <p>No recommendations yet.</p>
+{% endfor %}
+
+<hr>
+
 <h3>Certificates</h3>
 
 <button onclick="window.print()">Print Certificate</button>
