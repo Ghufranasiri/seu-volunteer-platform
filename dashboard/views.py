@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate, get_user_model
@@ -95,3 +96,28 @@ def manage_users(request):
 
 def approve_hours(request):
     return redirect('opportunity_list')
+=======
+from django.shortcuts import render
+from .ai_recommendation import recommend_opportunities
+
+def dashboard_view(request):
+    # Example user data 
+    user = {
+    "major": "Education",
+    "interests": ["teaching", "technology"]
+}
+
+    # Temporary opportunities 
+    opportunities = []
+
+    recommended = recommend_opportunities(user, opportunities)
+
+    context = {
+        "total_opportunities": 10,
+        "total_applications": 25,
+        "total_hours": 120,
+        "recommended": recommended
+    }
+
+    return render(request, "dashboard/dashboard.html", context)
+>>>>>>> c67a4b7230575b2399e5e3d6588c331b5f1e6a8a

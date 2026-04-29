@@ -5,9 +5,36 @@
 
 <p>Welcome {{ user.username }}</p>
 
+<<<<<<< HEAD
 <ul>
     <li><a href="{% url 'student_dashboard' %}">Student Dashboard</a></li>
     <li><a href="{% url 'agency_dashboard' %}">Agency Dashboard</a></li>
     <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
 </ul>
 {% endblock %}
+=======
+<p>Total Opportunities: {{ total_opportunities }}</p>
+<p>Total Applications: {{ total_applications }}</p>
+<p>Total Volunteer Hours: {{ total_hours }}</p>
+
+<h3>Recommended for you</h3>
+
+{% if recommended %}
+    <ul>
+        {% for opp in recommended %}
+            <li>{{ opp.title }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No recommendations available</p>
+{% endif %}
+
+<hr>
+
+<h3>Certificates</h3>
+
+<button onclick="window.print()">Print Certificate</button>
+
+</body>
+</html>
+>>>>>>> c67a4b7230575b2399e5e3d6588c331b5f1e6a8a

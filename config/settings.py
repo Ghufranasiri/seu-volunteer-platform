@@ -1,15 +1,19 @@
-import os
-from pathlib import Path
+"""
+Django settings for config project.
+"""
 
-# 1. المسارات الأساسية
+from pathlib import Path
+from django.utils.translation import gettext_lazy as _
+
+# BASE DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 2. إعدادات الحماية
-SECRET_KEY = 'django-insecure-your-secret-key-here'
+# SECURITY
+SECRET_KEY = 'django-insecure-0*djcwk-n#5bon1vdp(at)j(5l)h1#7qhe0a%$o2j%1+x4z$xi'
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 
-# 3. التطبيقات المثبتة
+# APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -17,20 +21,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # تطبيقات المشروع
+
     'users.apps.UsersConfig',
     'dashboard',
     'opportunities',
     'applications',
-    'chatbot', 
+    'accounts',
+    'chatbot',
 ]
 
-# 4. الميدل وير (تم تعديل الترتيب لضمان عمل اللغة)
+# MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  # ضروري جداً أن يكون في هذا الموقع (رقم 3)
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -38,13 +42,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# URLS
 ROOT_URLCONF = 'config.urls'
 
-# 5. إعدادات القوالب (لحل مشكلة عدم رؤية المجلدات)
+# TEMPLATES
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # يخبر دجانغو أن يبحث في مجلد templates الرئيسي
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -52,15 +57,16 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18n', # يدعم الترجمة في القوالب
+                'django.template.context_processors.i18n',
             ],
         },
     },
 ]
 
+# WSGI
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# 6. قاعدة البيانات
+# DATABASE
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -68,14 +74,20 @@ DATABASES = {
     }
 }
 
-# 7. إعدادات اللغة (تعريب إنجليزي/عربي)
-LANGUAGE_CODE = 'ar' 
+# PASSWORDS
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+]
+
+# LANGUAGE
+LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-from django.utils.translation import gettext_lazy as _
 
 LANGUAGES = [
     ('ar', _('Arabic')),
@@ -83,20 +95,23 @@ LANGUAGES = [
 ]
 
 LOCALE_PATHS = [
-    BASE_DIR / 'locale/',
+    BASE_DIR / 'locale',
 ]
 
-# 8. الملفات الثابتة (CSS/JS)
+# STATIC FILES
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# 9. إعدادات المستخدم والروابط
+# DEFAULT FIELD
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# USER
 AUTH_USER_MODEL = 'users.CustomUser'
 
+# AUTH REDIRECTS
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'

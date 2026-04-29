@@ -13,8 +13,9 @@ urlpatterns = [
     path('signup/', dashboard_views.register_view, name='signup'),
 
     path('opportunities/', include('opportunities.urls')),
-
+    path('users/', include('users.urls')),
     path('chatbot/', include('chatbot.urls')),
+    path('', include('accounts.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 
