@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2>Dashboard</h2>
+        <p>Manage opportunities and volunteer requests.</p>
+
+        <div style="margin-bottom:20px;">
+            <a href="{% url 'opportunity_add' %}" class="btn-primary">Add Opportunity</a>
+            <a href="{% url 'view_volunteers' %}" class="btn-secondary">View Volunteers</a>
+        </div>
+
+        <div class="card">
+            <h3>Recent Opportunities</h3>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                </tr>
+                {% for opportunity in opportunities %}
+                <tr>
+                    <td>{{ opportunity.title }}</td>
+                    <td>{{ opportunity.location }}</td>
+                    <td>{% if opportunity.is_active %}Active{% else %}Inactive{% endif %}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No opportunities found.</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

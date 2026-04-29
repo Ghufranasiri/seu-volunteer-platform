@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE|default:'en' }}" dir="{% if request.LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SEU Volunteer Platform{% endblock %}</title>
+
+    <style>
+        :root{
+            --text:#111111;
+            --muted:#666666;
+            --border:#dddddd;
+            --bg:#ffffff;
+            --light:#f7f7f7;
+        }
+
+        *{
+            box-sizing:border-box;
+        }
+
+        body{
+            margin:0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:var(--bg);
+            color:var(--text);
+        }
+
+        .navbar{
+            width:100%;
+            background:#ffffff;
+            border-bottom:1px solid var(--border);
+            padding:16px 5%;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:12px;
+        }
+
+        .brand{
+            font-size:1.1rem;
+            font-weight:700;
+        }
+
+        .nav-links{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            flex-wrap:wrap;
+        }
+
+        .nav-links a,
+        .lang-btn{
+            text-decoration:none;
+            color:#111111;
+            padding:8px 12px;
+            border:1px solid transparent;
+            background:transparent;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:14px;
+        }
+
+        .nav-links a:hover,
+        .lang-btn:hover{
+            background:#f3f3f3;
+        }
+
+        .nav-links .btn{
+            border:1px solid #111111;
+            font-weight:600;
+        }
+
+        .container{
+            width:min(1100px, 92%);
+            margin:0 auto;
+        }
+
+        .hero{
+            min-height:78vh;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            padding:40px 20px;
+        }
+
+        .hero h1{
+            font-size:42px;
+            margin-bottom:14px;
+        }
+
+        .hero p{
+            max-width:700px;
+            color:var(--muted);
+            line-height:1.9;
+            margin-bottom:28px;
+            font-size:1rem;
+        }
+
+        .hero-actions{
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+            justify-content:center;
+        }
+
+        .btn-primary,
+        .btn-secondary{
+            display:inline-block;
+            padding:12px 22px;
+            border-radius:10px;
+            text-decoration:none;
+            font-weight:600;
+        }
+
+        .btn-primary{
+            background:#111111;
+            color:white;
+        }
+
+        .btn-secondary{
+            border:1px solid #111111;
+            color:#111111;
+            background:white;
+        }
+
+        .section{
+            padding:50px 0;
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+            gap:18px;
+        }
+
+        .card{
+            background:#ffffff;
+            border:1px solid var(--border);
+            border-radius:14px;
+            padding:20px;
+        }
+
+        .card h3{
+            margin-top:0;
+        }
+
+        .card p{
+            color:var(--muted);
+            line-height:1.7;
+        }
+
+        .form-box{
+            max-width:520px;
+            margin:50px auto;
+            border:1px solid var(--border);
+            border-radius:14px;
+            padding:24px;
+            background:white;
+        }
+
+        .form-box h2{
+            margin-top:0;
+        }
+
+        .form-box input{
+            width:100%;
+            padding:12px;
+            margin-bottom:12px;
+            border:1px solid var(--border);
+            border-radius:10px;
+            font-size:14px;
+        }
+
+        .form-box button{
+            background:#111111;
+            color:white;
+            border:none;
+            padding:12px 18px;
+            border-radius:10px;
+            cursor:pointer;
+        }
+
+        footer{
+            text-align:center;
+            color:var(--muted);
+            padding:24px 12px 32px;
+            border-top:1px solid var(--border);
+            margin-top:40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand">
+            {% if request.LANGUAGE_CODE == 'ar' %}
+                منصة التطوع - SEU
+            {% else %}
+                SEU Volunteer Platform
+            {% endif %}
+        </div>
+
+        <nav class="nav-links">
+            <a href="{% url 'home' %}">
+                {% if request.LANGUAGE_CODE == 'ar' %}الرئيسية{% else %}Home{% endif %}
+            </a>
+
+            <a href="{% url 'opportunity_list' %}">
+                {% if request.LANGUAGE_CODE == 'ar' %}الفرص{% else %}Opportunities{% endif %}
+            </a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn">
+                    {% if request.LANGUAGE_CODE == 'ar' %}تسجيل خروج{% else %}Logout{% endif %}
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}">
+                    {% if request.LANGUAGE_CODE == 'ar' %}دخول{% else %}Login{% endif %}
+                </a>
+                <a href="{% url 'signup' %}" class="btn">
+                    {% if request.LANGUAGE_CODE == 'ar' %}تسجيل جديد{% else %}Register{% endif %}
+                </a>
+            {% endif %}
+
+            <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                {% if request.LANGUAGE_CODE == 'ar' %}
+                    <button type="submit" name="language" value="en" class="lang-btn">English</button>
+                {% else %}
+                    <button type="submit" name="language" value="ar" class="lang-btn">العربية</button>
+                {% endif %}
+            </form>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        Saudi Electronic University
+    </footer>
+
+    <script src="//code.tidio.co/qdgffixjzyzveurfwudu9y0dbiwzgunz.js" async></script>
+</body>
+</html>

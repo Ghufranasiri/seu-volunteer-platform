@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}View Volunteers{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="card">
+            <h2>Registered Volunteers</h2>
+
+            <table>
+                <tr>
+                    <th>Student</th>
+                    <th>Opportunity</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                {% for volunteer in volunteers %}
+                <tr>
+                    <td>{{ volunteer.student.first_name }}</td>
+                    <td>{{ volunteer.opportunity.title }}</td>
+                    <td>{{ volunteer.status }}</td>
+                    <td>
+                        <a href="{% url 'approve_registration' volunteer.id %}">Approve</a> |
+                        <a href="{% url 'reject_registration' volunteer.id %}">Reject</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
