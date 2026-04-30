@@ -13,6 +13,28 @@
 <p>Total Applications: {{ total_applications }}</p>
 <p>Total Volunteer Hours: {{ total_hours }}</p>
 
+<h3>Recommended for you</h3>
+
+{% if recommended %}
+    <ul>
+        {% for opp in recommended %}
+            <li>{{ opp.title }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No recommendations available</p>
+{% endif %}
+
+<hr>
+
+<h3>Recommended Opportunities</h3>
+
+{% for opp in recommended %}
+    <p>{{ opp.title }}</p>
+{% empty %}
+    <p>No recommendations yet.</p>
+{% endfor %}
+
 <hr>
 
 <h3>Certificates</h3>
