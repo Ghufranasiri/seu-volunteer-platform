@@ -16,14 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.http import HttpResponse
-
-def home(request):
-    return HttpResponse("SEU Volunteer Platform is running ✅")
+from config import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+    path('', views.home, name='home'),
+
+path('login/', views.login_view, name='login'),
+path('register/', views.register_view, name='register'),
+path('logout/', views.logout_view, name='logout'),
+
     path('dashboard/', include('dashboard.urls')),
     path('opportunities/', include('opportunities.urls')),
+    path('applications/', include('applications.urls')),
+    path('chatbot/', include('chatbot.urls')),
 ]
