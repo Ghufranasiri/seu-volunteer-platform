@@ -1,21 +1,8 @@
 from django.shortcuts import render
 from .ai_recommendation import recommend_opportunities
-<<<<<<< HEAD
-
-def dashboard_view(request):
-    # Example user data 
-    user = {
-    "major": "Education",
-    "interests": ["teaching", "technology"]
-}
-
-    # Temporary opportunities 
-    opportunities = []
-=======
 
 
 def dashboard_view(request):
-
     opportunities = [
         {
             "title": "Teaching Kids",
@@ -35,7 +22,6 @@ def dashboard_view(request):
         "major": "education",
         "interests": ["teaching"]
     }
->>>>>>> d3b871f (fix dashboard recommendation display)
 
     recommended = recommend_opportunities(user, opportunities)
 
@@ -46,8 +32,4 @@ def dashboard_view(request):
         "recommended": recommended
     }
 
-<<<<<<< HEAD
     return render(request, "dashboard/dashboard.html", context)
-=======
-    return render(request, "dashboard/dashboard.html", context)
->>>>>>> d3b871f (fix dashboard recommendation display)

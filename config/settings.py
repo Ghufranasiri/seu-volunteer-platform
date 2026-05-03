@@ -100,11 +100,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-
-ui-design
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # USER MODEL
- main
+
 AUTH_USER_MODEL = 'users.CustomUser'

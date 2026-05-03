@@ -28,12 +28,11 @@ path('logout/', views.logout_view, name='logout'),
 
     path('dashboard/', include('dashboard.urls')),
     path('opportunities/', include('opportunities.urls')),
-ui-design
+
     path('applications/', include('applications.urls')),
     path('chatbot/', include('chatbot.urls')),
 
     path('users/', include('users.urls')),
-    path('chatbot/', include('chatbot.urls')),
     path('', include('accounts.urls')),
- main
+ 
 ]
