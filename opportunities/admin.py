@@ -4,8 +4,6 @@ from .models import Opportunity
 
 @admin.register(Opportunity)
 class OpportunityAdmin(admin.ModelAdmin):
-    list_display = ('name', 'organization', 'location', 'date', 'hours', 'is_active')
-    list_filter = ('is_active', 'category', 'date')
-    search_fields = ('name', 'description', 'organization', 'location')
-    list_editable = ('is_active',)
-    ordering = ('-created_at',)
+    list_display = ('title', 'location', 'is_active', 'created_at')
+    list_filter = ('is_active', 'created_at')
+    search_fields = ('title', 'location', 'description')
