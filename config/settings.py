@@ -6,7 +6,7 @@ Django settings for config project.
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
- maryam-merge-fix
+ #maryam-merge-fix
 # BASE DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,9 +38,10 @@ INSTALLED_APPS = [
     'applications',
     'accounts',
     'chatbot',
+    'student_profile',
 ]
 
- maryam-merge-fix
+ #maryam-merge-fix
 # MIDDLEWARE
 
 
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-maryam-merge-fix
+#maryam-merge-fix
 # URLS
 ROOT_URLCONF = 'config.urls'
 
@@ -81,7 +82,7 @@ TEMPLATES = [
     },
 ]
 
- maryam-merge-fix
+ #maryam-merge-fix
 # WSGI
 WSGI_APPLICATION = 'config.wsgi.application'
 
@@ -97,7 +98,7 @@ DATABASES = {
     }
 }
 
- maryam-merge-fix
+ #maryam-merge-fix
 # PASSWORDS
 
 
@@ -108,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
- maryam-merge-fix
+ #maryam-merge-fix
 # LANGUAGE
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
@@ -120,7 +121,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-maryam-merge-fix
+#maryam-merge-fix
 LANGUAGES = [
     ('ar', _('Arabic')),
     ('en', _('English')),
@@ -139,7 +140,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
- maryam-merge-fix
+ #maryam-merge-fix
 # DEFAULT FIELD
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
