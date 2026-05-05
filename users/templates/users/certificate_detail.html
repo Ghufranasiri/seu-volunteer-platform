@@ -148,7 +148,7 @@
             margin: 25px 0;
         }
 
-       
+        /* 🔥 هذا التعديل المهم */
         .lang-btn {
             display: inline-block;
             padding: 8px 22px;
@@ -173,8 +173,10 @@
             border: none;
             background: #1f2744;
             color: white;
-            cursor: pointer;
-        }
+
+cursor: pointer;
+
+}
 
         @media print {
             .lang-switch,
@@ -203,13 +205,7 @@
 
     <div class="presented">This certificate is presented to</div>
 
-    <div class="name">
-           {% if certificate.user.first_name or certificate.user.last_name %}
-        {{ certificate.user.first_name }} {{ certificate.user.last_name }}
-           {% else %}
-        {{ certificate.user.username }}
-    {% endif %}
-    
+    <div class="name">{{ certificate.user.username }}</div>
     <div class="name-line"></div>
 
     <div class="desc">has successfully completed the volunteer activity:</div>

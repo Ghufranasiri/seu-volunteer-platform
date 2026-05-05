@@ -1,4 +1,6 @@
-maryam-merge-fix
+from django.shortcuts import render
+
+
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -102,6 +104,7 @@ from django.shortcuts import render
 from .ai_recommendation import recommend_opportunities
 
 from django.shortcuts import render, redirect
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 
@@ -114,45 +117,51 @@ from dashboard.ai_recommendation import recommend_opportunities
 @login_required
 def dashboard_view(request):
 
-    # 🔒 منع دخول الأدمن للداشبورد
-    if request.user.is_staff:
-        return redirect('/admin/')
+    # Agency / Supervisor Dashboard
+    if request.user.is_staff or getattr(request.user, "role", "") == "supervisor":
+        opportunities = Opportunity.objects.all()
+        applications = Application.objects.all()
 
-    # 📊 الفرص المتاحة
+        context = {
+            "opportunities": opportunities,
+            "applications": applications,
+            "total_opportunities": opportunities.count(),
+            "total_applications": applications.count(),
+            "pending_applications": applications.filter(status="pending").count(),
+        }
+
+        return render(request, "dashboard/agency_dashboard.html", context)
+
+    # Student / User Dashboard
     opportunities = Opportunity.objects.filter(is_active=True)
 
     total_opportunities = opportunities.count()
 
-    # 📄 عدد التقديمات
     total_applications = Application.objects.filter(
         student=request.user
     ).count()
 
-    # ⏱️ مجموع الساعات
     total_hours = Application.objects.filter(
         student=request.user,
-        status='completed'
+        status="completed"
     ).aggregate(
-        total=Sum('volunteer_hours')
-    )['total'] or 0
+        total=Sum("volunteer_hours")
+    )["total"] or 0
 
-    
     user_data = {
         "major": getattr(request.user, "major", "") or "",
         "interests": getattr(request.user, "interests", "") or "",
     }
 
-    
     recommended = recommend_opportunities(user_data, opportunities)
 
- 
     context = {
         "total_opportunities": total_opportunities,
         "total_applications": total_applications,
         "total_hours": total_hours,
         "recommended": recommended,
     }
-maryam-merge-fix
+
     return render(request, "dashboard/dashboard.html", context)
 
     return render(request, "dashboard/dashboard.html", context)
