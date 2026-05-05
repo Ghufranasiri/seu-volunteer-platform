@@ -12,6 +12,7 @@ urlpatterns = [
     path('login/', dashboard_views.login_view, name='login'),
     path('logout/', dashboard_views.logout_view, name='logout'),
     path('signup/', dashboard_views.register_view, name='signup'),
+    path('profile/', include('student_profile.urls')),
 
 
 from django.urls import include, path
