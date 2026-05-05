@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="ar">
@@ -248,12 +247,7 @@ body {
     <div class="subtitle">إتمام</div>
     <div class="presented">تُمنح هذه الشهادة إلى</div>
 
-    <div class="name">
-    {% if certificate.user.first_name or certificate.user.last_name %}
-        {{ certificate.user.first_name }} {{ certificate.user.last_name }}
-    {% else %}
-        {{ certificate.user.username }}
-    {% endif %}
+    <div class="name">{{ certificate.user.username }}</div>
     <div class="name-line"></div>
 
     <div class="desc">لإتمامه بنجاح النشاط التطوعي:</div>
