@@ -1,3 +1,10 @@
+maryam-merge-fix
+def opportunity_list(request):
+    opportunities = Opportunity.objects.all().order_by('-created_at')
+    return render(request, 'opportunities/opportunity_list.html', {
+        'opportunities': opportunities
+    })
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Opportunity
 
@@ -60,3 +67,4 @@ def delete_opportunity(request, pk):
         opportunity.delete()
 
     return redirect("dashboard")
+

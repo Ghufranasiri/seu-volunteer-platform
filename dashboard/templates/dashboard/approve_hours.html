@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Approve Hours{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="card">
+            <h2>Approve Hours</h2>
+
+            <table>
+                <tr>
+                    <th>Student</th>
+                    <th>Opportunity</th>
+                    <th>Status</th>
+                </tr>
+                {% for reg in registrations %}
+                <tr>
+                    <td>{{ reg.student.first_name }}</td>
+                    <td>{{ reg.opportunity.title }}</td>
+                    <td>{{ reg.status }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

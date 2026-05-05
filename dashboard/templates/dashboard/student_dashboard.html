@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2>Dashboard</h2>
+        <p>Your volunteer activity and registrations.</p>
+
+        <div class="card" style="margin-top:20px;">
+            <h3>My Registrations</h3>
+
+            <table>
+                <tr>
+                    <th>Opportunity</th>
+                    <th>Status</th>
+                    <th>Registered At</th>
+                </tr>
+                {% for reg in registrations %}
+                <tr>
+                    <td>{{ reg.opportunity.title }}</td>
+                    <td>{{ reg.status }}</td>
+                    <td>{{ reg.registered_at }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No registrations yet.</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

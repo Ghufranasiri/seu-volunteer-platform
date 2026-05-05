@@ -1,3 +1,23 @@
+ maryam-merge-fix
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<p>Welcome {{ user.username }}</p>
+
+
+<ul>
+    <li><a href="{% url 'student_dashboard' %}">Student Dashboard</a></li>
+    <li><a href="{% url 'agency_dashboard' %}">Agency Dashboard</a></li>
+    <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+</ul>
+{% endblock %}
+
+<p>Total Opportunities: {{ total_opportunities }}</p>
+<p>Total Applications: {{ total_applications }}</p>
+<p>Total Volunteer Hours: {{ total_hours }}</p>
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -130,4 +150,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+ maryam-merge-fix
 </html>
+
+
+</html>
+

@@ -1,3 +1,14 @@
+# Create your views here.
+from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import user_passes_test
+
+# دالة للتأكد أن المستخدم هو الأدمن فقط
+@user_passes_test(lambda u: u.is_superuser)
+def manage_users(request):
+    # جلب كل المستخدمين واستبعاد الأدمن نفسه من القائمة
+    all_users = User.objects.all().exclude(is_superuser=True)
+    return render(request, 'dashboard/manage_users.html', {'users': all_users})
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
@@ -40,3 +51,4 @@ def apply_opportunity(request, pk):
     return render(request, "applications/apply.html", {
         "opportunity": opportunity,
     })
+
