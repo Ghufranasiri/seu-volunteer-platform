@@ -1,13 +1,17 @@
 <h2>My Profile</h2>
 
-<p>Username: {{ request.user.username }}</p>
-<p>Email: {{ request.user.email }}</p>
-<p>Phone: {{ request.user.profile.phone }}</p>
-<p>Department: {{ request.user.profile.department }}</p>
-
-{% if request.user.profile.profile_image %}
-    <img src="{{ request.user.profile.profile_image.url }}" width="150">
+{% if profile.profile_image %}
+    <img src="{{ profile.profile_image.url }}" width="150">
 {% endif %}
 
+<p>Username: {{ profile.user.username }}</p>
+<p>Email: {{ profile.user.email }}</p>
+<p>Phone: {{ profile.phone }}</p>
+<p>Department: {{ profile.department }}</p>
+<p>Major: {{ profile.major }}</p>
+<p>Interests: {{ profile.interests }}</p>
+<p>Skills: {{ profile.skills }}</p>
+
 <br>
-<a href="{% url 'edit_profile' %}">Edit Profile</a>
+<a href="{% url 'edit_profile' %}">Edit Profile</a> |
+<a href="{% url 'home' %}">Home</a>
