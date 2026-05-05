@@ -32,16 +32,21 @@
                 <div class="opportunity-card h-100">
 
                     <div class="opportunity-card-body">
-                        <span class="opportunity-badge">Volunteer</span>
+                        <span class="opportunity-badge">
+                            {{ opportunity.category|default:"Volunteer" }}
+                        </span>
 
                         <h5 class="opportunity-title">
-                            {{ opportunity.name }}
+                            {{ opportunity.title }}
                         </h5>
 
                         <div class="opportunity-meta">
                             <p>📍 {{ opportunity.location }}</p>
                             <p>📅 {{ opportunity.date }}</p>
-                            <p>⏰ {{ opportunity.hours }} hours</p>
+
+                            {% if opportunity.capacity %}
+                            <p>👥 Capacity: {{ opportunity.capacity }}</p>
+                            {% endif %}
 
                             {% if opportunity.organization %}
                             <p>🏢 {{ opportunity.organization }}</p>
