@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="ar">
@@ -23,7 +24,6 @@ body {
     background: #f3efe6;
     font-family: 'Cairo', sans-serif;
 }
-
 
 .title,
 .subtitle,
@@ -179,17 +179,37 @@ body {
     margin: 28px 0 10px;
 }
 
+.lang-btn {
+    display: inline-block;
+    padding: 8px 22px;
+    border: 1px solid #c7a86b;
+    color: #333;
+    text-decoration: none;
+    background: transparent;
+    font-size: 14px;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.lang-btn:hover {
+    background: #c7a86b;
+    color: white;
+}
+
 .pdf-btn {
     display: block;
     margin: 14px auto 28px;
+    padding: 10px 20px;
+    border: none;
+    background: #1f2744;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
 }
-
 
 @media print {
     .lang-switch,
-    .pdf-btn,
-    .print-btn,
-    button {
+    .pdf-btn {
         display: none !important;
     }
 
@@ -200,7 +220,6 @@ body {
         width: 210mm;
         height: 210mm;
         overflow: hidden;
-        background: white;
     }
 
     .page {
@@ -215,50 +234,55 @@ body {
 
 <div class="page">
 
-<div class="ornament tl">❦</div>
-<div class="ornament tr">❦</div>
-<div class="ornament bl">❦</div>
-<div class="ornament br">❦</div>
+    <div class="ornament tl">❦</div>
+    <div class="ornament tr">❦</div>
+    <div class="ornament bl">❦</div>
+    <div class="ornament br">❦</div>
 
-<div class="top-center">
-<img src="{% static 'logo_new.png' %}" class="logo">
-<div class="wax-seal"></div>
-</div>
+    <div class="top-center">
+        <img src="{% static 'logo_new.png' %}" class="logo">
+        <div class="wax-seal"></div>
+    </div>
 
-<div class="title">شهادة</div>
-<div class="subtitle">إتمام</div>
+    <div class="title">شهادة</div>
+    <div class="subtitle">إتمام</div>
+    <div class="presented">تُمنح هذه الشهادة إلى</div>
 
-<div class="presented">تُمنح هذه الشهادة إلى</div>
+    <div class="name">
+    {% if certificate.user.first_name or certificate.user.last_name %}
+        {{ certificate.user.first_name }} {{ certificate.user.last_name }}
+    {% else %}
+        {{ certificate.user.username }}
+    {% endif %}
+    <div class="name-line"></div>
 
-<div class="name">{{ certificate.user.username }}</div>
-<div class="name-line"></div>
+    <div class="desc">لإتمامه بنجاح النشاط التطوعي:</div>
+    <div class="activity">{{ certificate.opportunity.name }}</div>
+    <div class="activity-line"></div>
 
-<div class="desc">لإتمامه بنجاح النشاط التطوعي:</div>
-<div class="activity">{{ certificate.opportunity.name }}</div>
-<div class="activity-line"></div>
+    <div class="bottom">
 
-<div class="bottom">
+        <div class="sig-block">
+            <div class="sig-line"></div>
+            <div class="sig-label">التاريخ</div>
+            <div class="sig-name">{{ certificate.issued_at|date:"Y-m-d" }}</div>
+        </div>
 
-<div class="sig-block">
-<div class="sig-line"></div>
-<div class="sig-label">التاريخ</div>
-<div class="sig-name">{{ certificate.issued_at|date:"Y-m-d" }}</div>
-</div>
+        <div class="middle-mark">❦</div>
 
-<div class="middle-mark">❦</div>
+        <div class="sig-block">
+            <div class="sig-line"></div>
+            <div class="sig-label">مديرة برنامج التطوع</div>
+            <div class="sig-name">د. باسمة الجهني</div>
+        </div>
 
-<div class="sig-block">
-<div class="sig-line"></div>
-<div class="sig-label">مديرة برنامج التطوع</div>
-<div class="sig-name">د. باسمة الجهني</div>
-</div>
-
-</div>
+    </div>
 
 </div>
 
 <div class="lang-switch">
-<a href="/users/certificate/{{ certificate.id }}/">English</a>
+    <a href="{% url 'certificate_en' certificate.id %}" class="lang-btn">English</a>
+    <a href="{% url 'certificate_ar' certificate.id %}" class="lang-btn">Arabic</a>
 </div>
 
 <button class="pdf-btn" onclick="window.print()">تحميل PDF</button>

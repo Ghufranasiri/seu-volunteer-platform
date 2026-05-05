@@ -3,6 +3,7 @@
 {% block title %}تفاصيل الفرصة | {{ opportunity.title }}{% endblock %}
 
 {% block content %}
+ maryam-merge-fix
 <div style="max-width: 900px; margin: 0 auto; padding: 20px;">
     <a href="{% url 'opportunities' %}" style="text-decoration: none; color: #3498db; font-weight: bold; display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
         <span>←</span> العودة إلى الفرص المتاحة
@@ -41,6 +42,56 @@
             {% endif %}
         </div>
 
+
+<a href="{% url 'opportunities:opportunity_list' %}" class="btn btn-outline-primary rounded-pill mb-4">
+    ← Back to Opportunities
+</a>
+
+<div class="detail-card" style="margin-top: 1rem;">
+
+    
+    <div class="detail-header">
+        <h1>{{ opportunity.name }}</h1>
+        
+
+
+    <div class="detail-header">
+        <h1>{{ opportunity.name }}</h1>
+
+
+        {% if opportunity.category %}
+            <span style="background: #3498db; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">
+                {{ opportunity.category }}
+            </span>
+        {% endif %}
+    </div>
+
+    <div class="detail-info">
+
+        <div class="info-item">
+            <label>Location</label>
+            <div>{{ opportunity.location }}</div>
+        </div>
+
+        <div class="info-item">
+            <label>Date</label>
+            <div>{{ opportunity.date }}</div>
+        </div>
+
+        <div class="info-item">
+            <label>Volunteer Hours</label>
+            <div>{{ opportunity.hours }} hours</div>
+        </div>
+
+        {% if opportunity.organization %}
+        <div class="info-item">
+            <label>Organization</label>
+            <div>{{ opportunity.organization }}</div>
+        </div>
+        {% endif %}
+
+    </div>
+
         <div style="padding: 2.5rem;">
             <h3 style="color: #2c3e50; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
                 <span style="width: 4px; height: 20px; background: #3498db; display: inline-block; border-radius: 2px;"></span>
@@ -61,8 +112,46 @@
             </div>
         </div>
     </div>
+
+    <!-- 🔹 حذف زر التسجيل واستبداله بملاحظة -->
+    <div class="mt-4">
+        <p class="text-muted">
+            This opportunity is posted by an agency.
+        </p>
+    </div>
+
+
+    <div class="description">
+        <h3 style="margin-bottom: 0.5rem; color: #2c3e50;">Description</h3>
+        <p>{{ opportunity.description|linebreaks }}</p>
+    </div>
+
+    
+    <div class="mt-4 text-center">
+
+        {% if user.is_authenticated and not user.is_staff %}
+            <a href="{% url 'applications:apply_opportunity' opportunity.pk %}" 
+               class="btn btn-primary rounded-pill px-4">
+               Register for this Opportunity
+            </a>
+
+        {% elif user.is_staff %}
+            <p class="text-muted fw-bold">
+                Admins cannot register for volunteer opportunities
+            </p>
+
+        {% else %}
+            <a href="{% url 'login' %}" 
+               class="btn btn-primary rounded-pill px-4">
+               Login to Register
+            </a>
+        {% endif %}
+
+    </div>
+
 </div>
 
+maryam-merge-fix
 <style>
     /* لمسة جمالية للزر عند تمرير الماوس */
     button:hover {
@@ -72,3 +161,10 @@
     }
 </style>
 {% endblock %}
+
+{% endblock %}
+
+</div>
+
+{% endblock %}
+
