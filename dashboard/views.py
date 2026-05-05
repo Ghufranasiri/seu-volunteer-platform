@@ -1,35 +1,44 @@
-from django.shortcuts import render
-from .ai_recommendation import recommend_opportunities
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
+
+from opportunities.models import Opportunity
+from applications.models import Application
+from dashboard.ai_recommendation import recommend_opportunities
 
 
+@login_required
 def dashboard_view(request):
-    opportunities = [
-        {
-            "title": "Teaching Kids",
-            "category": "education"
-        },
-        {
-            "title": "Hospital Volunteer",
-            "category": "health"
-        },
-        {
-            "title": "Event Organizer",
-            "category": "management"
-        }
-    ]
+    if request.user.is_staff:
+        return redirect('/admin/')
 
-    user = {
-        "major": "education",
-        "interests": ["teaching"]
+    opportunities = Opportunity.objects.filter(is_active=True)
+
+    total_opportunities = opportunities.count()
+
+    total_applications = Application.objects.filter(
+        student=request.user
+    ).count()
+
+    total_hours = Application.objects.filter(
+        student=request.user,
+        status='completed'
+    ).aggregate(
+        total=Sum('volunteer_hours')
+    )['total'] or 0
+
+    user_data = {
+        "major": getattr(request.user, "major", "") or "",
+        "interests": getattr(request.user, "interests", "") or "",
     }
 
-    recommended = recommend_opportunities(user, opportunities)
+    recommended = recommend_opportunities(user_data, opportunities)
 
     context = {
-        "total_opportunities": 10,
-        "total_applications": 25,
-        "total_hours": 120,
-        "recommended": recommended
+        "total_opportunities": total_opportunities,
+        "total_applications": total_applications,
+        "total_hours": total_hours,
+        "recommended": recommended,
     }
 
     return render(request, "dashboard/dashboard.html", context)

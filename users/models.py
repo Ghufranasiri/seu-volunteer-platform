@@ -7,6 +7,15 @@ class CustomUser(AbstractUser):
     university_id = models.CharField(max_length=20, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
 
+    # For AI Recommendation
+    major = models.CharField(max_length=100, blank=True, null=True)
+    interests = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text="Write interests separated by commas, e.g. teaching, environment, community"
+    )
+
     ROLE_CHOICES = (
         ('student', 'Student'),
         ('supervisor', 'Supervisor'),
@@ -33,7 +42,7 @@ class Certificate(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.opportunity.name}"
-    
+
     class Meta:
         constraints = [
             models.UniqueConstraint(
@@ -41,3 +50,4 @@ class Certificate(models.Model):
                 name='unique_user_opportunity_certificate'
             )
         ]
+        

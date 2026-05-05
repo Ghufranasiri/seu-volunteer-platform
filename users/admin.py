@@ -3,11 +3,19 @@ from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, Certificate
 
 
-@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
-        ('Additional Info', {'fields': ('phone', 'university_id', 'bio')}),
+        ('Additional Information', {
+            'fields': ('phone', 'university_id', 'bio', 'role', 'major', 'interests')
+        }),
+    )
+
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ('Additional Information', {
+            'fields': ('phone', 'university_id', 'bio', 'role', 'major', 'interests')
+        }),
     )
 
 
+admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Certificate)

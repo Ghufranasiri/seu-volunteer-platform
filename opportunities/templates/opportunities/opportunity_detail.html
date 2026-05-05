@@ -3,15 +3,20 @@
 {% block title %}{{ opportunity.name }}{% endblock %}
 
 {% block content %}
+
 <a href="{% url 'opportunities:opportunity_list' %}" class="btn btn-outline-primary rounded-pill mb-4">
     ← Back to Opportunities
 </a>
 
 <div class="detail-card" style="margin-top: 1rem;">
+    
     <div class="detail-header">
         <h1>{{ opportunity.name }}</h1>
+        
         {% if opportunity.category %}
-            <span style="background: #3498db; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">{{ opportunity.category }}</span>
+            <span style="background: #3498db; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">
+                {{ opportunity.category }}
+            </span>
         {% endif %}
     </div>
 
@@ -20,14 +25,17 @@
             <label>Location</label>
             <div>{{ opportunity.location }}</div>
         </div>
+
         <div class="info-item">
             <label>Date</label>
             <div>{{ opportunity.date }}</div>
         </div>
+
         <div class="info-item">
             <label>Volunteer Hours</label>
             <div>{{ opportunity.hours }} hours</div>
         </div>
+
         {% if opportunity.organization %}
         <div class="info-item">
             <label>Organization</label>
@@ -36,15 +44,34 @@
         {% endif %}
     </div>
 
- <div class="description">
-    <h3 style="margin-bottom: 0.5rem; color: #2c3e50;">Description</h3>
-    <p>{{ opportunity.description|linebreaks }}</p>
+    <div class="description">
+        <h3 style="margin-bottom: 0.5rem; color: #2c3e50;">Description</h3>
+        <p>{{ opportunity.description|linebreaks }}</p>
+    </div>
+
+    
+    <div class="mt-4 text-center">
+
+        {% if user.is_authenticated and not user.is_staff %}
+            <a href="{% url 'applications:apply_opportunity' opportunity.pk %}" 
+               class="btn btn-primary rounded-pill px-4">
+               Register for this Opportunity
+            </a>
+
+        {% elif user.is_staff %}
+            <p class="text-muted fw-bold">
+                Admins cannot register for volunteer opportunities
+            </p>
+
+        {% else %}
+            <a href="{% url 'login' %}" 
+               class="btn btn-primary rounded-pill px-4">
+               Login to Register
+            </a>
+        {% endif %}
+
+    </div>
+
 </div>
 
-<div class="mt-4">
-    <a href="{% url 'applications:apply_opportunity' opportunity.pk %}" class="btn btn-primary rounded-pill px-4">
-    Register for this Opportunity
-</a>
-</div>
-</div>
 {% endblock %}

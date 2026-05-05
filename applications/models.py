@@ -17,13 +17,15 @@ class Application(models.Model):
     applied_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Application {self.id} - {self.status}"
+        return f"{self.student.username} - {self.opportunity.name} - {self.status}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
         if self.status == 'completed':
             from users.models import Certificate
+            from accounts.models import Notification
+
             if not Certificate.objects.filter(
                 user=self.student,
                 opportunity=self.opportunity
@@ -32,16 +34,18 @@ class Application(models.Model):
                     user=self.student,
                     opportunity=self.opportunity
                 )
-            from accounts.models import Notification
+
+            message = f"Congratulations! Your certificate for {self.opportunity.name} is ready."
 
             if not Notification.objects.filter(
-            user=self.student,
-            message=f"Congratulations! Your certificate for {self.opportunity} is ready."
+                user=self.student,
+                message=message
             ).exists():
-             Notification.objects.create(
-            user=self.student,
-            message=f"Congratulations! Your certificate for {self.opportunity} is ready."
-    )
+                Notification.objects.create(
+                    user=self.student,
+                    message=message
+                )
+
     class Meta:
         constraints = [
             models.UniqueConstraint(
