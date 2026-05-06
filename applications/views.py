@@ -1,28 +1,25 @@
-# Create your views here.
-from django.shortcuts import render
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import user_passes_test
-
-# دالة للتأكد أن المستخدم هو الأدمن فقط
-@user_passes_test(lambda u: u.is_superuser)
-def manage_users(request):
-    # جلب كل المستخدمين واستبعاد الأدمن نفسه من القائمة
-    all_users = User.objects.all().exclude(is_superuser=True)
-    return render(request, 'dashboard/manage_users.html', {'users': all_users})
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
 from opportunities.models import Opportunity
 from .models import Application
 
 
 @login_required
 def apply_opportunity(request, pk):
-    opportunity = get_object_or_404(Opportunity, pk=pk)
+    opportunity = get_object_or_404(
+        Opportunity,
+        pk=pk,
+        is_active=True,
+        status='approved'
+    )
 
-    if request.user.is_staff:
-        messages.error(request, "Admins cannot register for volunteer opportunities.")
+    if request.user.role != 'student':
+        messages.error(
+            request,
+            "Only students can apply for volunteer opportunities."
+        )
         return redirect('opportunities:opportunity_list')
 
     existing_application = Application.objects.filter(
@@ -31,22 +28,25 @@ def apply_opportunity(request, pk):
     ).first()
 
     if existing_application:
-        return render(request, "applications/apply.html", {
-            "opportunity": opportunity,
-            "already_applied": True,
-            "application": existing_application,
-        })
+        messages.info(
+            request,
+            "You have already applied for this opportunity."
+        )
+        return redirect('dashboard:student_dashboard')
 
     if request.method == "POST":
         Application.objects.create(
             student=request.user,
-            opportunity=opportunity
+            opportunity=opportunity,
+            status='pending'
         )
 
-        return render(request, "applications/apply.html", {
-            "opportunity": opportunity,
-            "success": True,
-        })
+        messages.success(
+            request,
+            "Your application has been submitted successfully."
+        )
+
+        return redirect('dashboard:student_dashboard')
 
     return render(request, "applications/apply.html", {
         "opportunity": opportunity,

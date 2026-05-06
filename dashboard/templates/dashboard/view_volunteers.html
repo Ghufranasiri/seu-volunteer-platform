@@ -18,7 +18,7 @@
                 {% for volunteer in volunteers %}
                 <tr>
                     <td>{{ volunteer.student.first_name }}</td>
-                    <td>{{ volunteer.opportunity.title }}</td>
+                    <td>{{ volunteer.opportunity.name }}</td>
                     <td>{{ volunteer.status }}</td>
                     <td>
                         <a href="{% url 'approve_registration' volunteer.id %}">Approve</a> |
