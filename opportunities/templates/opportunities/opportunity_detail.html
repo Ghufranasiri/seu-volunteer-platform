@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}تفاصيل الفرصة | {{ opportunity.title }}{% endblock %}
+{% block title %}تفاصيل الفرصة | {{ opportunity.name }}{% endblock %}
 
 {% block content %}
  maryam-merge-fix
@@ -14,7 +14,7 @@
         <div style="padding: 2.5rem; border-bottom: 1px solid #f0f0f0;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px;">
                 <div>
-                    <h1 style="color: #2c3e50; font-size: 2.2rem; margin: 0 0 10px 0;">{{ opportunity.title }}</h1>
+                    <h1 style="color: #2c3e50; font-size: 2.2rem; margin: 0 0 10px 0;">{{ opportunity.name }}</h1>
                     <p style="color: #7f8c8d; font-size: 1.1rem; margin: 0;">📍 {{ opportunity.location|default:"عن بُعد (Remote)" }}</p>
                 </div>
                 {% if opportunity.category %}
