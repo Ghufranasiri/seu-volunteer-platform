@@ -5,24 +5,77 @@
 {% block content %}
 <section class="section">
     <div class="container">
+
         <div class="card">
+
             <h2>Manage Users</h2>
 
             <table>
+
                 <tr>
                     <th>ID</th>
+                    <th>Username</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
+
                 {% for user in users %}
                 <tr>
+
                     <td>{{ user.id }}</td>
+
+                    <td>{{ user.username }}</td>
+
                     <td>{{ user.first_name }}</td>
+
                     <td>{{ user.email }}</td>
+
+                    <td>{{ user.role }}</td>
+
+                    <td>
+                        {% if user.is_active %}
+                            Active
+                        {% else %}
+                            Disabled
+                        {% endif %}
+                    </td>
+
+                    <td>
+
+                        {% if user != request.user %}
+
+                            <a href="{% url 'dashboard:toggle_user_status' user.pk %}">
+                                {% if user.is_active %}
+                                    Disable
+                                {% else %}
+                                    Enable
+                                {% endif %}
+                            </a>
+
+                            |
+
+                            <a href="{% url 'dashboard:delete_user' user.pk %}">
+                                Delete
+                            </a>
+
+                        {% else %}
+
+                            Current Admin
+
+                        {% endif %}
+
+                    </td>
+
                 </tr>
                 {% endfor %}
+
             </table>
+
         </div>
+
     </div>
 </section>
 {% endblock %}
