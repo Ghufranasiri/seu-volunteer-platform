@@ -37,16 +37,12 @@
                         </span>
 
                         <h5 class="opportunity-title">
-                            {{ opportunity.title }}
+                            {{ opportunity.name }}
                         </h5>
 
                         <div class="opportunity-meta">
                             <p>📍 {{ opportunity.location }}</p>
                             <p>📅 {{ opportunity.date }}</p>
-
-                            {% if opportunity.capacity %}
-                            <p>👥 Capacity: {{ opportunity.capacity }}</p>
-                            {% endif %}
 
                             {% if opportunity.organization %}
                             <p>🏢 {{ opportunity.organization }}</p>
@@ -60,6 +56,21 @@
                         <a href="{% url 'opportunities:opportunity_detail' opportunity.pk %}" class="opportunity-btn">
                             View Details
                         </a>
+
+                        {% if user.is_authenticated and user.role == 'student' %}
+                            {% if opportunity.id in applied_opportunity_ids %}
+                                <button class="opportunity-btn" disabled>
+                                    Already Applied
+                                </button>
+                            {% else %}
+                                <form method="POST" action="{% url 'applications:apply_opportunity' opportunity.id %}" style="margin-top:10px;"></form>
+                                    {% csrf_token %}
+                                    <button type="submit" class="opportunity-btn">
+                                        Apply
+                                    </button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
                     </div>
 
                 </div>

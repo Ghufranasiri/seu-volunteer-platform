@@ -1,10 +1,12 @@
-from django.shortcuts import render
-
-
-
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate, get_user_model
+from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
+
+from opportunities.models import Opportunity
+from applications.models import Application
+from dashboard.ai_recommendation import recommend_opportunities
 
 User = get_user_model()
 
@@ -15,14 +17,28 @@ def home(request):
 
 def login_view(request):
     if request.method == 'POST':
+
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(
+            request,
+            username=username,
+            password=password
+        )
 
         if user is not None:
+
             login(request, user)
-            return redirect('opportunity_list')
+
+            if user.role == 'admin':
+                return redirect('dashboard:admin_dashboard')
+
+            elif user.role == 'agency':
+                return redirect('dashboard:agency_dashboard')
+
+            else:
+                return redirect('dashboard:student_dashboard')
 
         messages.error(request, 'Invalid username or password.')
 
@@ -35,7 +51,9 @@ def logout_view(request):
 
 
 def register_view(request):
+
     if request.method == 'POST':
+
         first_name = request.POST.get('first_name')
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -60,80 +78,40 @@ def register_view(request):
             email=email,
             password=password
         )
+
         user.first_name = first_name or ""
         user.save()
 
         login(request, user)
-        return redirect('opportunity_list')
+
+        return redirect('dashboard:student_dashboard')
 
     return render(request, 'registration/signup.html')
 
 
+@login_required
 def dashboard(request):
-    return redirect('opportunity_list')
 
+    if request.user.role == 'admin':
+        return redirect('dashboard:admin_dashboard')
 
-def student_dashboard(request):
-    return redirect('opportunity_list')
+    elif request.user.role == 'agency':
+        return redirect('dashboard:agency_dashboard')
 
-
-def agency_dashboard(request):
-    return redirect('opportunity_list')
-
-
-def admin_dashboard(request):
-    return redirect('opportunity_list')
-
-
-def add_opportunity(request):
-    return redirect('opportunity_list')
-
-
-def view_volunteers(request):
-    return redirect('opportunity_list')
-
-
-def manage_users(request):
-    return redirect('opportunity_list')
-
-
-def approve_hours(request):
-    return redirect('opportunity_list')
-
-from django.shortcuts import render
-from .ai_recommendation import recommend_opportunities
-
-from django.shortcuts import render, redirect
-
-from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
-
-
-from opportunities.models import Opportunity
-from applications.models import Application
-from dashboard.ai_recommendation import recommend_opportunities
+    else:
+        return redirect('dashboard:student_dashboard')
 
 
 @login_required
-def dashboard_view(request):
+def student_dashboard(request):
 
-    # Agency / Supervisor Dashboard
-    if request.user.is_staff or getattr(request.user, "role", "") == "supervisor":
-        opportunities = Opportunity.objects.all()
-        applications = Application.objects.all()
+    if request.user.role != 'student':
+        return redirect('home')
 
-        context = {
-            "opportunities": opportunities,
-            "applications": applications,
-            "total_opportunities": opportunities.count(),
-            "total_applications": applications.count(),
-            "pending_applications": applications.filter(status="pending").count(),
-        }
-
-        return render(request, "dashboard/agency_dashboard.html", context)
-
-    # Student / User Dashboard
-    opportunities = Opportunity.objects.filter(is_active=True)
+    opportunities = Opportunity.objects.filter(
+        is_active=True,
+        status='approved'
+    )
 
     total_opportunities = opportunities.count()
 
@@ -153,16 +131,192 @@ def dashboard_view(request):
         "interests": getattr(request.user, "interests", "") or "",
     }
 
-    recommended = recommend_opportunities(user_data, opportunities)
+    recommended = recommend_opportunities(
+        user_data,
+        opportunities
+    )
+
+    registrations = Application.objects.filter(
+        student=request.user
+    ).select_related('opportunity')
 
     context = {
         "total_opportunities": total_opportunities,
         "total_applications": total_applications,
         "total_hours": total_hours,
         "recommended": recommended,
+        "registrations": registrations,
     }
 
-    return render(request, "dashboard/dashboard.html", context)
+    return render(
+        request,
+        'dashboard/student_dashboard.html',
+        context
+    )
 
-    return render(request, "dashboard/dashboard.html", context)
 
+@login_required
+def agency_dashboard(request):
+
+    if request.user.role != 'agency':
+        return redirect('home')
+
+    opportunities = Opportunity.objects.all().order_by('-id')
+
+    applications = Application.objects.filter(
+        opportunity__in=opportunities
+    ).select_related(
+        'student',
+        'opportunity'
+    ).order_by('-applied_at')
+
+    context = {
+        'opportunities': opportunities,
+        'applications': applications,
+    }
+
+    return render(
+        request,
+        'dashboard/agency_dashboard.html',
+        context
+    )
+
+
+@login_required
+def admin_dashboard(request):
+
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    opportunities = Opportunity.objects.all().order_by('-id')
+
+    total_users = User.objects.count()
+
+    active_opportunities = Opportunity.objects.filter(
+        status='approved'
+    ).count()
+
+    pending_requests = Opportunity.objects.filter(
+        status='pending'
+    ).count()
+
+    context = {
+        'total_users': total_users,
+        'active_opportunities': active_opportunities,
+        'pending_requests': pending_requests,
+        'opportunities': opportunities,
+    }
+
+    return render(
+        request,
+        'dashboard/admin_dashboard.html',
+        context
+    )
+
+
+@login_required
+def add_opportunity(request):
+
+    if request.user.role != 'agency':
+        return redirect('home')
+
+    return render(
+        request,
+        'dashboard/add_opportunity.html'
+    )
+
+
+@login_required
+def view_volunteers(request):
+
+    if request.user.role not in ['agency', 'admin']:
+        return redirect('home')
+
+    return render(
+        request,
+        'dashboard/view_volunteers.html'
+    )
+
+
+@login_required
+def manage_users(request):
+
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    users = User.objects.all().order_by('id')
+
+    return render(
+        request,
+        'dashboard/manage_users.html',
+        {
+            'users': users
+        }
+    )
+
+
+@login_required
+def approve_hours(request):
+
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    registrations = Application.objects.select_related(
+        'student',
+        'opportunity'
+    ).order_by('-applied_at')
+
+    return render(
+        request,
+        'dashboard/approve_hours.html',
+        {
+            'registrations': registrations
+        }
+    )
+
+
+@login_required
+def complete_application(request, pk):
+
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    application = Application.objects.get(pk=pk)
+
+    application.status = 'completed'
+    application.volunteer_hours = application.opportunity.hours
+
+    application.save()
+
+    return redirect('dashboard:approve_hours')
+
+
+@login_required
+def toggle_user_status(request, pk):
+
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    user = User.objects.get(pk=pk)
+
+    # يمنع الأدمن يقفل نفسه
+    if user != request.user:
+        user.is_active = not user.is_active
+        user.save()
+
+    return redirect('dashboard:manage_users')
+
+
+@login_required
+def delete_user(request, pk):
+
+    if request.user.role != 'admin':
+        return redirect('home')
+
+    user = User.objects.get(pk=pk)
+
+    # يمنع الأدمن يحذف نفسه
+    if user != request.user:
+        user.delete()
+
+    return redirect('dashboard:manage_users')
